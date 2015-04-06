@@ -43,6 +43,11 @@ class ArticlesController < ApplicationController
 #    render plain: params[:article].inspect
   end
 
+  def count
+    num_of_articles = Article.all.count
+    render :json => { count: num_of_articles }
+  end
+
   private
   def article_params
     params.require(:article).permit(:title, :text)
