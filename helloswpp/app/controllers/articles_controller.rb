@@ -1,5 +1,19 @@
 class ArticlesController < ApplicationController
 
+  def edit
+    @article = Article.find(params[:id])
+  end
+
+  def update
+    @article = Article.find(params[:id])
+
+    if @article.update(article_params)
+      redirect_to @article
+    else
+      render 'edit'
+    end
+  end
+
   def index
     @articles = Article.all
   end
@@ -8,15 +22,17 @@ class ArticlesController < ApplicationController
   end
 
   def new
+    @article = Article.new
   end
 
   def create
     @article = Article.new(article_params)
 # Initialize new model with filtered parameter.
-    @article.save
-
-    redirect_to @article
-
+    if @article.save
+      redirect_to @article
+    else
+      render 'new'
+    end
 #    render plain: params[:article].inspect
   end
 
